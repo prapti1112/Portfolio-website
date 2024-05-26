@@ -28,7 +28,7 @@ jobs:
 
       - name: Run unit tests
         run: |
-          python manage.py test  --pattern='test_unit_*.py'
+          python portfolio_website/manage.py test  --pattern='test_unit_*.py'
 
       - name: Check code coverage
         run: |
