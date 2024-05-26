@@ -1,0 +1,10 @@
+Name                            Stmts   Miss  Cover   Missing
+-------------------------------------------------------------
+manage.py                          12     12     0%   2-22
+portfolio_website\__init__.py       0      0   100%
+portfolio_website\asgi.py           4      4     0%   10-16
+portfolio_website\settings.py      18     18     0%   13-123
+portfolio_website\urls.py           3      3     0%   17-20
+portfolio_website\wsgi.py           4      4     0%   10-16
+-------------------------------------------------------------
+TOTAL                              41     41     0%
