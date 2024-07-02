@@ -4,7 +4,7 @@
 
 {% block content %} 
 <link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
-    <link rel="stylesheet" href="{% static 'portfolio/css/home.css' %}">
+<link rel="stylesheet" href="{% static 'portfolio\css\home.css' %}">
 
     <!-- Hero Section -->
     <div class="section" id="hero_section">
@@ -47,27 +47,9 @@
                             <li>9</li>
                             <li>10</li>
                         </ul>
-                    </div>
-        </div>
-        </div>
-            <!-- <div class="col-6">
-                <div class="gallery">
-                    <ul class="cards">
-                        <li>0</li>
-                        <li>1</li>
-                        <li>2</li>
-                        <li>3</li>
-                        <li>4</li>
-                        <li>5</li>
-                        <li>6</li>
-                        <li>7</li>
-                        <li>8</li>
-                        <li>9</li>
-                        <li>10</li>
-                    </ul>
                 </div>
             </div>
-        </div> -->
+        </div>
     </div>
 
     <!-- About Me -->
@@ -122,29 +104,23 @@
             </div>
         </div>
      </div>
-
+    
     <!-- Projects -->
-     <div class="section" id="projects" style="height: fit-content; margin-bottom: 32px;">
+    <div class="section" id="projects" style="height: fit-content; margin-bottom: 48px;">
         <h1 style="padding: 2%; color: {{ font_primary }}; text-align: center;">Projects</h1>
 
         <div class="showcase-container">
             <div class="carousel">
                 {% for project in projects %}
-                    {% if forloop.counter == 1 %}
-                    <div class="{% get_carousel_classname forloop.counter %}" id="{{ forloop.counter }}" style="transform: rotateY(0deg) translateZ(250px);">
-                    {% elif forloop.counter < 12 %}
-                        <div class="{% get_carousel_classname forloop.counter %}" id="{{ forloop.counter }}" style="transform: rotateY({% set_horizontal_carousel_rotation forloop.counter0 %}deg) translateZ(250px) rotateY(-{% set_horizontal_carousel_rotation forloop.counter0 %}deg);">
-                    {% else %}
-                        <div class="{% get_carousel_classname forloop.counter %}" id="{{ forloop.counter }}">
-                    {% endif %}
-                            <div class="item">{% get_carousel_classname forloop.counter %}</div>
+                    <div class="showcase-item" id="{{ forloop.counter }}">
+                        <div class="item"></div>
                   </div>
                 {% endfor %}
             </div>
             <div class="next" style="right:-200%;">Next</div>
             <div class="prev" style="left:-200%;">Prev</div>
-          </div>
-     </div>
+        </div>
+    </div>
 
     <!-- Blogs -->
      <div class="section" id="blogs" style="height: fit-content; margin: 5%;">
@@ -153,20 +129,13 @@
         <div class="showcase-container">
             <div class="carousel">
                 {% for blog in blogs %}
-                    {% if forloop.counter == 1 %}
-                    <div class="{% get_carousel_classname forloop.counter %}" id="{{ forloop.counter }}" style="transform: rotateY(0deg) translateZ(250px);">
-                    {% elif forloop.counter < 12 %}
-                        <div class="{% get_carousel_classname forloop.counter %}" id="{{ forloop.counter }}" style="transform: rotateY({% set_horizontal_carousel_rotation forloop.counter0 %}deg) translateZ(250px) rotateY(-{% set_horizontal_carousel_rotation forloop.counter0 %}deg);">
-                    {% else %}
-                        <div class="{% get_carousel_classname forloop.counter %}" id="{{ forloop.counter }}">
-                    {% endif %}
-                            <div class="item">{% get_carousel_classname forloop.counter %}</div>
+                    <div class="showcase-item" id="{{ forloop.counter }}">
+                        <div class="item"></div>
                   </div>
                 {% endfor %}
             </div>
             <div class="next" style="right:-200%;">Next</div>
             <div class="prev" style="left:-200%;">Prev</div>
-          </div>
         </div>
      </div>
 
@@ -177,6 +146,26 @@
     <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{% static 'portfolio/js/home.js' %}"></script>
+    <script src="{% static 'portfolio\js\home.js' %}"></script>
+    <script id="update_classname">
+        $( document ).ready( function () {
+            const showcases = [ "projects", "blogs" ];
+            showcases.forEach((section) => { 
+                let elements = document.getElementById(section).getElementsByClassName("showcase-item")
+                for (let index = 0; index < elements.length; index++) {
+                    const element = elements[index];
+                    let class_name = String.fromCharCode(97 + index)
+                    element.classList.add( class_name )
+                    element.getElementsByClassName("item").innerText += class_name
+                    if(index == 0) {
+                        element.style.transform = "rotateY(0deg) translateZ(250px)"
+                    } else if (index <= 11) {
+                        let angle = (30*index) < 360 ? (30*index) : 0
+                        element.style.transform = `rotateY(${angle}deg) translateZ(250px) rotateY(-${angle}deg)`
+                    }
+                }
+            });
+        });
+    </script>
 
 {% endblock content %}

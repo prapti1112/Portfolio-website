@@ -27,8 +27,8 @@ class WorkExperience(models.Model):
     logo_url = models.URLField()
     is_current_job = models.BooleanField(default=False)
 
-    def __str__(self) -> str:
-        return f"Role: {self.role} in {self.company_name}"
+    # def __str__(self) -> str:
+    #     return f"Role: {self.role} in {self.company_name}"
 
 class Category(models.Model):
     """Model for categories monitered in profile.
