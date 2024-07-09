@@ -3,6 +3,7 @@ from django.utils.timezone import now
 from django.db import models
 # from django.contrib.postgres.fields import ArrayField
 from portfolio.models import Category
+from django_editorjs import EditorJsField
 
 class Project(models.Model):
     """Model for Projects.
@@ -16,7 +17,8 @@ class Project(models.Model):
     project_thumbnail = models.ImageField(upload_to="uploads/projects", default="https://dummyimage.com/450x300/dee2e6/6c757d.jpg")
     demo_link = models.URLField(name="demo", null=True, default="https://github.com/prapti1112/")
     code_link = models.URLField(name="code", null=True, default="https://github.com/prapti1112/")
-    contents = models.TextField(name="contents", default = "Contents of the project")
+    # contents = models.TextField(name="contents", default = "Contents of the project")
+    contents = EditorJsField(name="contents")
     last_modified = models.DateField(default=now)
     in_progress = models.BooleanField(default=False)
     # keywords = ArrayField( 

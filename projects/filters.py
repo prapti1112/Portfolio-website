@@ -18,22 +18,7 @@ class ProjectFilter(django_filters.FilterSet):
         )
     )
 
-    # category = django_filters.ChoiceFilter(
-    #     choices = "category",
-    #     lookup_expr='exact',
-    #     widget = forms.Select(
-    #         attrs={
-    #             "class":"btn btn-secondary dropdown-toggle",
-    #             "aria-labelledby":"dropdownMenuButton",
-    #         }
-    #     )
-    # )
-
 
     class Meta:
         model = Project
-        # fields = {
-        #     'title': [ 'icontains' ],
-        #     'category': [ 'exact' ],
-        # }
         fields = [ 'title', 'category' ]
