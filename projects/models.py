@@ -1,4 +1,3 @@
-import uuid
 from django.utils.timezone import now
 from django.db import models
 # from django.contrib.postgres.fields import ArrayField
@@ -18,7 +17,32 @@ class Project(models.Model):
     demo_link = models.URLField(name="demo", null=True, default="https://github.com/prapti1112/")
     code_link = models.URLField(name="code", null=True, default="https://github.com/prapti1112/")
     # contents = models.TextField(name="contents", default = "Contents of the project")
-    contents = EditorJsField(name="contents")
+    contents = EditorJsField(name="contents", editorjs_config={
+            "tools":{
+                "Link":{
+                    "config":{
+                        "endpoint": 'http://127.0.0.1:8000/projects/edit/linkUpload',
+                        "additionalRequestHeaders": [{ "Content-Type": "multipart/form-data" }],
+                        },
+                },
+                "Image":{
+                    "config":{
+                        "endpoints":{
+                            "byFile":'http://127.0.0.1:8000/projects/edit/imageUpload',
+                            "byUrl":'http://127.0.0.1:8000/projects/edit/imageUpload'
+                        },
+                        "method": "POST",
+                       "additionalRequestHeaders": [{ "Content-Type": "multipart/form-data" }],
+                    }
+                },
+                "Attaches":{
+                    "config":{
+                        "endpoint":'http://127.0.0.1:8000/projects/edit/fileUpload'
+                    },
+                    "additionalRequestHeaders": [{ "Content-Type": "multipart/form-data" }],
+                }
+            }
+        })
     last_modified = models.DateField(default=now)
     in_progress = models.BooleanField(default=False)
     # keywords = ArrayField( 

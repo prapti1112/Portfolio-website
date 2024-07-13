@@ -1,13 +1,19 @@
 import json
+from multiprocessing import current_process
+from pathlib import Path
 from venv import logger
 # from django.db.models.query import QuerySet
 from django.http import JsonResponse
+from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
+from setuptools import sic
 # from portfolio.models import Category
 from projects.models import Project
 from .filters import ProjectFilter
 from django.views.decorators.csrf import requires_csrf_token
 from django.core.files.storage import FileSystemStorage
+from .forms import ProjectForm
+from django.contrib import messages
 
 
 with open("color_palette.json") as file:
@@ -56,23 +62,51 @@ class ProjectDetailView(DetailView):
         context = { **context, **color_pallete}
         return context
 
+def editProject(request, pk):
+    current_project = Project.objects.get(pk=pk)
+
+    try:
+        json.loads(current_project.contents)
+    except ValueError:
+        current_project.contents = ""
+
+    if request.method=="POST":
+        form=ProjectForm(request.POST, instance=current_project)
+        print(request.POST)
+        if form.is_valid():
+            project=form.save()
+            messages.success(request,'submitted succesfully {}'.format(project))
+            return redirect(f'/projects/{pk}/edit')      
+    print(current_project)
+    form=ProjectForm(instance=current_project)
+
+    context = { **{'form':form}, **color_pallete }
+    return render(request, r"projects\project_edit.html", context)
 
 @requires_csrf_token
 def upload_image(request):
-    f=request.FILES['image']
+    print( "Uploading images...." )
+    f = request.FILES.get('image', None)
+    if not f:
+        return JsonResponse({'success':0,'file':{'url': "Unable to save file"}})
+    
+    print( f"File_path: {f}" )
     fs=FileSystemStorage()
-    filename=str(f).split('.')[0]
-    file= fs.save(filename,f)
+    print( f"Saving file to: /media/uploads/projects/contents/images/{f}" )
+    file= fs.save(fr"uploads/projects/contents/images/{f}", f)
     fileurl=fs.url(file)
     return JsonResponse({'success':1,'file':{'url':fileurl}})
 
 @requires_csrf_token
 def upload_file(request):
-        f=request.FILES['file']
+        f=request.FILES.get('file', None)
+        if not f:
+            return JsonResponse({ 'success':0,'file':"Unable to save file" })
+
         fs=FileSystemStorage()
-        filename,ext=str(f).split('.')
+        filename, ext=str(f).split('.')
         print(filename,ext)
-        file=fs.save(str(f),f)
+        file=fs.save(f"uploads/projects/contents/files/{f}",f)
         fileurl=fs.url(file)
         fileSize=fs.size(file)
         return JsonResponse({'success':1,'file':{'url':fileurl,'name':str(f),'size':fileSize}})
@@ -82,7 +116,6 @@ def upload_link_view(request):
     import requests
     from bs4 import BeautifulSoup  
 
-    print(request.GET['url'])
     url = request.GET['url']
     response = requests.get(url)
     soup = BeautifulSoup(response.text,features="html.parser")
@@ -90,6 +123,7 @@ def upload_link_view(request):
     description=""
     title=""
     image=""
+
     for meta in metas:
         if 'property' in meta.attrs:
             if (meta.attrs['property']=='og:image'):
@@ -100,5 +134,5 @@ def upload_link_view(request):
             if (meta.attrs['name']=='title'):
                 title=meta.attrs['content']
     return JsonResponse({'success':1,'meta':
-    {"description":description,"title":title, "image":{"url":image}}
-})
+        {"description":description,"title":title, "image":{"url":image}} 
+    })
