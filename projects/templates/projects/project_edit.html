@@ -6,19 +6,15 @@
 {% for message in messages %}
     <h1>{{message}}</h1>
 {% endfor %}
-<!-- <style>
-  div.form-control label {
-    border: 2px solid red;
-  }
-</style> -->
-
-<form action="" method="POST">
+<form method="POST">
     {% csrf_token %}
     <!--  -->
     {{form.media}}
     <!--  -->
-    <div class="form-control">{{ form.as_div }}</div>
-    <button>Submit</button>
+    <div class="form-control" style="border-style: none;">{{ form.as_div }}</div>
+    <button class="btn btn-primary" style="margin: 3% 50%;">Submit</button>
 </form>
+
+<script src="{% static 'projects\js\edit_form.js' %}"></script>
 
 {% endblock %}
