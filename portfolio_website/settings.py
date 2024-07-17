@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     'django_editorjs',
     'portfolio',
     'projects',
+    'blogs',
 ]
 
 MIDDLEWARE = [
