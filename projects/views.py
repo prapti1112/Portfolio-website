@@ -1,12 +1,7 @@
 import json
-from multiprocessing import current_process
-from pathlib import Path
-from venv import logger
-# from django.db.models.query import QuerySet
 from django.http import JsonResponse
 from django.shortcuts import redirect, render
 from django.views.generic import ListView, DetailView
-from setuptools import sic
 # from portfolio.models import Category
 from projects.models import Project
 from .filters import ProjectFilter
