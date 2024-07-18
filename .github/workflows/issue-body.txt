@@ -1,0 +1,5 @@
+${{ job.status }}
+${{ job.steps[*].conclusion }}
+${{ job.steps[*].name }}: ${{ job.steps[*].conclusion }}
+${{ job.steps[*].name }}: ${{ job.steps[*].conclusion }}
+${{ job.steps[*].name }}: ${{ job.steps[*].conclusion }}

@@ -1,0 +1,44 @@
+name: Post-push Code Checks
+
+on:
+  push:
+    branches:
+      - "**"
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.11.x"
+
+      - name: Install dependencies
+        run: |
+          pip install -r requirements.txt
+
+      - name: Code linting
+        run: |
+          ruff check . --fix
+
+      - name: Check code coverage
+        run: |
+          coverage run --source='.' --module discover -v
+          coverage report -m > coverage_report.txt
+      
+      # - name: Run unit tests
+      #   run: |
+      #     python portfolio_website/manage.py test  --pattern='test_unit_*.py'
+
+      - name: Create GitHub issue on failure
+        if: ${{ failure() }}
+        uses: peter-evans/create-issue-from-file@v2
+        with:
+          title: Code Checks Failed
+          content-file: issue-body.txt
+          labels: failed-checks
+          assignees: ${{ github.actor }}

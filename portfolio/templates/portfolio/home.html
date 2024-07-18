@@ -1,0 +1,171 @@
+{%  extends 'base.html' %}
+{% load static %}
+
+
+{% block content %} 
+<link rel="stylesheet" href="https://unpkg.com/swiper@8/swiper-bundle.min.css" />
+<link rel="stylesheet" href="{% static 'portfolio\css\home.css' %}">
+
+    <!-- Hero Section -->
+    <div class="section" id="hero_section">
+        <div class="grid-container">
+            <div class="grid-item" style="padding: 20px 20px 20px 32px; transform: translateY(20%); height: calc(0.8*var(--section-height));">
+                Hi there, I am a
+                <h1 id="role" ><b>Deep Learning Engineer</b></h1>
+                <h5 id="tag_line">Unleashing the power of AI</h5>
+                <button type="button" class="btn btn-primary" style="background-color: {{ complementary_primary }}; border-color: {{ complementary_dark }};">Download Resume</button>
+            </div>
+            <div class="grid-item">
+                    <div class="gallery">
+                        <ul class="cards">
+                            <li>0</li>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>  
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                            <li>8</li>
+                            <li>9</li>
+                            <li>10</li>
+                        </ul>
+                    </div>
+            </div>
+            <div class="grid-item">
+                <div class="gallery">
+                        <ul class="cards">
+                            <li>0</li>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li>4</li>  
+                            <li>5</li>
+                            <li>6</li>
+                            <li>7</li>
+                            <li>8</li>
+                            <li>9</li>
+                            <li>10</li>
+                        </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Me -->
+    <div class="section grid-container" id="about_me" style="grid-template-columns: 25% auto; height: calc(0.45*--section-height); background-color:{{ accent_dark }}; padding: 16px;">
+        <div class="grid-item" style="margin: 8px; align-content: center;">
+            <h1 style="padding-left: 22%; color: {{ font_complementary }};">About Me</h1>
+        </div>
+        <div class="grid-item" style="margin: 8px;">
+            <p style="align-content: center; padding: 6% 5% 5% 12%; font-size: 14px; color: {{ font_complementary }};"> I am passionate about pushing the boundaries of artificial intelligence and deep learning. I thrive on the challenge of developing cutting-edge algorithms and models that can solve complex problems and push the limits of what's possible with AI.</p>
+        </div>
+    </div>
+
+    <!-- Skills -->
+     <div class="section" id="skills" style="padding: 5%; height: fit-content;">
+        <h1 style="margin-bottom: 16px;">Skills</h1>
+        <div class="grid-container" style="grid-template-columns: auto auto auto;">
+            {% for skill in skills %}
+                <div class="grid-item" style="padding: 2px 2px 2px 4px; margin-right: 20%; margin-bottom: 5%;">
+                    <img src="{% static 'portfolio\images\skill_tag.png' %}" alt="" style="height: 30px;">
+                    <div style="position: absolute;transform: translate(40px, -32px); font-weight: 600; font-size: large; " > {{ skill.skill }} </div>
+                    <div style="position: absolute;transform: translate(260px, -32px); font-weight: 400; font-size: small; " > Exp: {{ skill.work_experience }} years</div>
+                    <div class="progress"> 
+                        <div class="progress-bar" role="progressbar" style="width: calc({{ skill.skill_level }}% * 100); background-color: {{ accent_primary }};" aria-valuenow="{{ skill.skill_level }}" aria-valuemin="0" aria-valuemax="100">{% widthratio skill.skill_level 1 100 %}%</div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Work Experience -->
+     <div class="section grid-container" id="work_exp" style="grid-template-columns: 40% auto; height: fit-content;">
+        <div class="grid-item" style="margin: 8px; align-content: center;">
+            <h1 style="padding-left: 22%; color: {{ font_primary }};">Work Experience</h1>
+        </div>
+        <div class="grid-item" style="margin: 8px;">
+            <div class="timeline">
+                {% for experience in work_experience %}
+                    <div class="workex-container">
+                        <img src={{experience.logo_url}} alt="" style="border-color: {%if experience.is_current_job %} {{ complementary_primary }} {% else %} grey {% endif %};">
+                        <div class="text-box" style="background-color: {{ accent_light }};">
+                            <h4> {{ experience.company_name }} </h4>
+                            <h6 style="color: grey;"> {{ experience.role }} </h6>
+                            {% if experience.is_current_job %}
+                                <small>{{ experience.start_date }} - Present</small>
+                            {% else %}
+                                <small>{{ experience.start_date }} - {{ experience.end_date }}</small>
+                            {% endif %}
+                            <p style="font-size: small;" > {{ experience.work_description }} </p>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        </div>
+     </div>
+    
+    <!-- Projects -->
+    <div class="section" id="projects" style="height: fit-content; margin-bottom: 48px;">
+        <h1 style="padding: 2%; color: {{ font_primary }}; text-align: center;">Projects</h1>
+
+        <div class="showcase-container">
+            <div class="carousel">
+                {% for project in projects %}
+                    <div class="showcase-item" id="{{ forloop.counter }}">
+                        <div class="item"></div>
+                  </div>
+                {% endfor %}
+            </div>
+            <div class="next" style="right:-200%;">Next</div>
+            <div class="prev" style="left:-200%;">Prev</div>
+        </div>
+    </div>
+
+    <!-- Blogs -->
+     <div class="section" id="blogs" style="height: fit-content; margin: 5%;">
+        <h1 style="padding: 2%; color: {{ font_primary }}; text-align: center;">Blogs</h1>
+
+        <div class="showcase-container">
+            <div class="carousel">
+                {% for blog in blogs %}
+                    <div class="showcase-item" id="{{ forloop.counter }}">
+                        <div class="item"></div>
+                  </div>
+                {% endfor %}
+            </div>
+            <div class="next" style="right:-200%;">Next</div>
+            <div class="prev" style="left:-200%;">Prev</div>
+        </div>
+     </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollToPlugin.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{% static 'portfolio\js\home.js' %}"></script>
+    <script id="update_classname">
+        $( document ).ready( function () {
+            const showcases = [ "projects", "blogs" ];
+            showcases.forEach((section) => { 
+                let elements = document.getElementById(section).getElementsByClassName("showcase-item")
+                for (let index = 0; index < elements.length; index++) {
+                    const element = elements[index];
+                    let class_name = String.fromCharCode(97 + index)
+                    element.classList.add( class_name )
+                    element.getElementsByClassName("item").innerText += class_name
+                    if(index == 0) {
+                        element.style.transform = "rotateY(0deg) translateZ(250px)"
+                    } else if (index <= 11) {
+                        let angle = (30*index) < 360 ? (30*index) : 0
+                        element.style.transform = `rotateY(${angle}deg) translateZ(250px) rotateY(-${angle}deg)`
+                    }
+                }
+            });
+        });
+    </script>
+
+{% endblock content %}

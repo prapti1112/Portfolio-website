@@ -1,0 +1,16 @@
+{
+    "base_color": "#ffffff",
+
+    "accent_primary": "#D6A898", 
+    "accent_light": "#FFF3EF", 
+    "accent_dark": "#AD8273",
+
+    "complementary_primary": "#94618E", 
+    "complementary_light": "#FFCCF1", 
+    "complementary_dark": "#7B3F61",
+
+
+    "font_primary": "#000000",
+    "font_complementary": "#FFFFFF",
+    "font_secondary": "#878787"
+}
