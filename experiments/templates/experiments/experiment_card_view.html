@@ -4,8 +4,8 @@
 {% block content %}
     <!-- <h2>Blogs</h2>
     <ul>
-        {% for blog in blogs %}
-            <li>{{ blog.title }}</li>
+        {% for experiment in experiments %}
+            <li>{{ experiment.title }}</li>
         {% endfor %}
     </ul> -->
 
@@ -18,20 +18,19 @@
          </div>
         <div class="container px-4 px-lg-5 mt-4">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                {% for blog in blogs %}
+                {% for experiment in experiments %}
                     <div class="col mb-5">
-                        <!-- <a href="{% url 'projects:detail_view' blog.pk %}" style="text-decoration:none;"> -->
-                        <a href="{% url 'blogs:detail_view' blog.pk %}" style="text-decoration:none;">
+                        <a href="{% url 'experiments:detail_view' experiment.pk %}" style="text-decoration:none;">
                             <div class="card h-100">
-                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"> {{ blog.category }} </div>
-                                {% if 'media/uploads/blogs' in blog.thumbnail.url %}
-                                    <img class="card-img-top" src="{{ blog.thumbnail.url }}" alt="{{ blog.title }}" style="height: 170px;" />
+                                <div class="badge bg-dark text-white position-absolute" style="top: 0.5rem; right: 0.5rem"> {{ experiment.category }} </div>
+                                {% if 'media/uploads/experiments' in experiment.thumbnail.url %}
+                                    <img class="card-img-top" src="{{ experiment.thumbnail.url }}" alt="{{ experiment.title }}" style="height: 170px;" />
                                 {% else %}
                                     <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="..." />
                                 {% endif %}
                                 <div class="card-body p-4">
                                     <div class="text-center">
-                                        <h6 class="fw-bolder"> {{blog.title}} </h5>
+                                        <h6 class="fw-bolder"> {{experiment.title}} </h5>
                                     </div>  
                                 </div>
                             </div>
