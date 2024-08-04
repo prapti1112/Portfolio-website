@@ -15,7 +15,7 @@ from pathlib import Path
 import dj_database_url
 import django_heroku
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolvepython.exe -m pip install --upgrade pip().parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parentgi
 
 
 # Quick-start development settings - unsuitable for production
